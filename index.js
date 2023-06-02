@@ -19,6 +19,7 @@ function cadastrar(event) {
     .post("/usuarios", form)
     .then((res) => {
       usuarioId = res.data.id;
+      console.log(usuarioId)
       localStorage.setItem("usuario", usuarioId);
       alert(`Usuário cadastrado! ID: ${usuarioId}`);
       window.location.href = "login.html";
@@ -48,14 +49,9 @@ function logar() {
     .catch((err) => console.log(err.response.data));
 }
 
-function getIdUsuario() {
-  // const usuarioId = localStorage.getItem("usuario");
-  // return usuarioId;
-  return 1;
-}
-
 function criarRecado(event) {
   event.preventDefault();
+  const usuarioId = localStorage.getItem("usuario");
   const titulo = document.getElementById("titulo").value;
   const descricao = document.getElementById("descricao").value;
   const recadoForm = {
@@ -64,7 +60,7 @@ function criarRecado(event) {
   };
 
   api
-    .post(`/usuarios/${getIdUsuario()}/recados`, recadoForm)
+    .post(`/usuarios/${usuarioId}/recados`, recadoForm)
     .then((res) => {
       console.log(res);
       alert("Recado criado");
